@@ -30,7 +30,14 @@ const postsCreate = async(req, res) => {
 // finds all posts and populates the users info
 const posts = async(req, res) => {
     try{
-        const posts = await postModel.find().populate("userId", "email username _id profileImg")
+        const posts = await postModel.find().populate({
+            path: "comment",
+            select: "caption",
+            populate: {
+                path: "userId",
+                select: "username profileImg"
+            }
+        })
 
         res.json(posts)
     }catch (err){
