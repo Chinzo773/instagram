@@ -1,5 +1,6 @@
 const postModel = require('../Models/postSchema')
 const userModel = require('../Models/userSchema')
+const query = require('querystring')
 
 // This creates posts
 const postsCreate = async(req, res) => {
@@ -54,10 +55,12 @@ const posts = async(req, res) => {
 
 // finds all posts and populates the comments id 
 const postsComment = async(req, res) => {
+    const { postId } = req.params   
 
 
     try{
-        const posts = await postModel.find().populate({
+        console.log(postId)
+        const posts = await postModel.findById(postId).populate({
             path: "comment",
             select: "comment",
             populate: {
