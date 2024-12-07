@@ -32,11 +32,17 @@ const posts = async(req, res) => {
     try{
         const posts = await postModel.find().populate({
             path: "comment",
-            select: "caption",
+            select: "comment",
             populate: {
                 path: "userId",
                 select: "username profileImg"
             }
+        }).populate({
+            path: "likes",
+            select:"username profileImg"
+        }).populate({
+            path: "userId",
+            select: "username profileImg"
         })
 
         res.json(posts)
@@ -53,10 +59,10 @@ const postsComment = async(req, res) => {
     try{
         const posts = await postModel.find().populate({
             path: "comment",
-            select: "caption",
+            select: "comment",
             populate: {
                 path: "userId",
-                select: "username"
+                select: "username profileImg"
             }
         })
 
