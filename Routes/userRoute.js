@@ -3,26 +3,16 @@ const { signup, login, userPosts, follow, unfollow } = require('../Controller/us
 
 const userModel = require("../Models/userSchema")
 const userRoute = Router()
+const auth = require('../authenticator')
 
-const validateEmail = async(req, res, next) => {
-    const userData = req.body
-    const user = await userModel.findOne({ email: userData.email})
+userRoute.post('/signup', auth, signup)
 
-    if(!user){
-        next()
-    }else{
-        res.send("email exists")
-    }
-}
+userRoute.get('/login', auth, login)
 
-userRoute.post('/signup', validateEmail, signup)
+userRoute.get('/user/posts', auth, userPosts)
 
-userRoute.get('/login', login)
+userRoute.post('/user/follow', auth, follow)
 
-userRoute.get('/user/posts', userPosts)
-
-userRoute.post('/user/follow', follow)
-
-userRoute.delete('/user/unfollow', unfollow)
+userRoute.delete('/user/unfollow', auth, unfollow)
 
 module.exports = userRoute

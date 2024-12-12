@@ -1,13 +1,14 @@
 const { unlike, like, coutLike } = require('../Controller/likeController')
 const Router = require('express')
+const auth = require('../authenticator')
 
 const likeRoute = Router()
 
-likeRoute.post('/like', like)
+likeRoute.post('/like', auth, like)
 
-likeRoute.post('/unlike', unlike)
+likeRoute.post('/unlike', auth, unlike)
 
-likeRoute.get('/seeLikes', coutLike)
+likeRoute.get('/seeLikes', auth, coutLike)
 
 
 module.exports = likeRoute

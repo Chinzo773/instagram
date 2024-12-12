@@ -1,5 +1,8 @@
 const userModel = require('../Models/userSchema')
+const jwt = require('jsonwebtoken')
+const dotenv = require('dotenv')
 
+dotenv.config()
 
 // creates new user
 const signup = async(req, res) => {
@@ -13,11 +16,23 @@ const signup = async(req, res) => {
             profileImg: profileImg
         })
 
-        res.send('created')
+        const payload = {
+            userId: reso._id,
+            username: username
+        };
+
+        const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '24h' });
+
+        res.status(201).json({
+            message: 'User created successfully!',
+            token: token
+        });
 
     }catch(err){
         res.send(err)
     } 
+
+    
 }
 
 
@@ -25,12 +40,28 @@ const signup = async(req, res) => {
 const login = async(req, res) => {
     const {email, password} = req.body
 
+
     try{
-        const data = await userModel.find({email: email})
+        const user = await userModel.findOne({email: email})
         .populate("posts", "caption postImg")
         .populate("followers", "username")
 
-        res.send(data)
+        if(!user){
+            return res.status(400).json({ message: 'User not found' });
+        }
+
+        if(user.password != password){
+            return res.status(400).send('Password invalid')
+        }
+
+        const payload = {
+            userId: user._id,
+            username: user.username
+        }
+
+        const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '24h' })
+
+        res.send(payload + 'token:' + token )
     }catch(err){
         res.send(err)
     }
