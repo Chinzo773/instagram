@@ -61,7 +61,7 @@ const login = async(req, res) => {
 
         const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '24h' })
 
-        res.send(payload + 'token:' + token )
+        res.send(token)
     }catch(err){
         res.send(err)
     }
