@@ -5,9 +5,9 @@ const userModel = require("../Models/userSchema")
 const userRoute = Router()
 const auth = require('../authenticator')
 
-userRoute.post('/signup', auth, signup)
+userRoute.post('/signup', signup)
 
-userRoute.get('/login', auth, login)
+userRoute.get('/login', login)
 
 userRoute.get('/user/posts', auth, userPosts)
 
