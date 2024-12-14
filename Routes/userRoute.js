@@ -7,9 +7,9 @@ const auth = require('../authenticator')
 
 userRoute.post('/signup', signup)
 
-userRoute.get('/login', login)
+userRoute.post('/login', login)
 
-userRoute.get('/user/posts', auth, userPosts)
+userRoute.post('/user/posts', auth, userPosts)
 
 userRoute.post('/user/follow', auth, follow)
 
