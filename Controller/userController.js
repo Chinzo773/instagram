@@ -29,7 +29,7 @@ const signup = async(req, res) => {
         });
 
     }catch(err){
-        res.send(err)
+        res.json(err)
     } 
 
     
@@ -51,7 +51,7 @@ const login = async(req, res) => {
         }
 
         if(user.password != password){
-            return res.status(400).send('Password invalid')
+            return res.status(400).json('Password invalid')
         }
 
         const payload = {
@@ -88,7 +88,7 @@ const follow = async(req, res) => {
     const { userId, followId } = req.body
 
     if(userId == followId){
-        return res.send('cant folow ur own shit dumass pumpkin')
+        return res.json('cant folow ur own shit dumass pumpkin')
     }
 
     try{
@@ -104,7 +104,7 @@ const follow = async(req, res) => {
             }
         }, { new: true })
 
-        res.send(followed + following)
+        res.json({message: "followed succesfuly"})
     }catch (err){
         console.log(err)
     }
@@ -116,7 +116,7 @@ const unfollow = async(req, res) => {
     const {userId, unfollowId} = req.body
 
     if(userId == unfollowId){
-        return res.send('cant unfolow ur own shit dumass pumpkin')
+        return res.json({message:'cant follow urself'})
     }
 
     try{
@@ -132,9 +132,9 @@ const unfollow = async(req, res) => {
             }
         }, { new: true })  
 
-        res.send(unfollowed + unfollow)
+        res.json({message: 'unfollowed succesfully'})
     }catch(err){
-        res.send(err)
+        res.json(err)
     }
 }
 

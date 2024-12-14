@@ -18,9 +18,9 @@ const comment = async(req, res) => {
         })
         
 
-        res.send(response)
+        res.json(response)
     }catch(err){
-        res.send(err)
+        res.json(err)
     }
 }
 

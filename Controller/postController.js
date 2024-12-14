@@ -20,10 +20,10 @@ const postsCreate = async(req, res) => {
         })
 
 
-        res.send(response)
+        res.json(response)
     }catch(err){
         console.log(err)
-        res.send(err)
+        res.json(err)
     }
 }
 
@@ -48,7 +48,7 @@ const posts = async(req, res) => {
 
         res.json(posts)
     }catch (err){
-        res.send(err)
+        res.json(err)
     }
 }
 
@@ -69,9 +69,9 @@ const postsComment = async(req, res) => {
             }
         })
 
-        res.send(posts)
+        res.json(posts)
     }catch(err){
-        res.send(err)
+        res.json(err)
     }
 }
 

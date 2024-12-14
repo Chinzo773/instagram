@@ -13,9 +13,9 @@ const like = async(req, res) => {
             }
         }, { new: true })
         
-        res.send(response)
+        res.json(response)
     }catch(err){
-        res.send(err)
+        res.json(err)
     }
 }
 
@@ -30,9 +30,9 @@ const unlike = async(req, res) => {
             }
         })
 
-        res.send(response)
+        res.json(response)
     }catch(err){
-        res.send(err)
+        res.json(err)
     }
 }
 
@@ -43,9 +43,9 @@ const coutLike = async(req, res) => {
     console.log(post)
     try{
         const response = await postModel.findById({_id: post}).populate("likes", "username profileImg")
-        res.send(response)
+        res.json(response)
     }catch(err){
-        res.send(err)
+        res.json(err)
     }
 
 }
