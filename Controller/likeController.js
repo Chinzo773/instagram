@@ -6,14 +6,27 @@ const postModel = require('../Models/postSchema')
 const like = async(req, res) => {
     const { userId, post } = req.body
 
+    const status = await postModel.findById(post)
+
+
     try{
-        const response = await postModel.findByIdAndUpdate(post, {
-            $addToSet: {
-                likes: userId
-            }
-        }, { new: true })
-        
-        res.json(response)
+        if(status && status.likes.includes(userId)){
+            const response = await postModel.findByIdAndUpdate(post, {
+                $pull: {
+                    likes: userId
+                }
+            })
+    
+            res.json('unliked ' + status)
+        }else{
+            const response = await postModel.findByIdAndUpdate(post, {
+                $addToSet: {
+                    likes: userId
+                }
+            }, { new: true })
+            
+            res.json('liked' + status)
+        }
     }catch(err){
         res.json(err)
     }

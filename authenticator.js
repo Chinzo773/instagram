@@ -12,7 +12,7 @@ const auth = (req, res, next) => {
     if (!token) res.json({message: 'no token'})
 
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET)
-
+    
     if(decodedToken){
         next()
     }else{
