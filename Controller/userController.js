@@ -72,7 +72,10 @@ const login = async(req, res) => {
 const userPosts = async(req, res) => {
 
     try{
-        const posts = await userModel.find().populate("posts", "caption")
+        const posts = await userModel.find()
+            .populate("posts", "caption postImg")
+            .populate("followers", "username")  
+            .populate("following", "username")
 
         console.log({posts})
 
