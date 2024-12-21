@@ -70,9 +70,10 @@ const login = async(req, res) => {
 
 // finds all users and populates their posts 
 const userPosts = async(req, res) => {
+    const {userId} = req.body
 
     try{
-        const posts = await userModel.find()
+        const posts = await userModel.findById(userId)
             .populate("posts", "caption postImg")
             .populate("followers", "username")  
             .populate("following", "username")
