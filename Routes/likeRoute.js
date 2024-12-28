@@ -8,7 +8,7 @@ likeRoute.post('/like', auth, like)
 
 likeRoute.post('/unlike', auth, unlike)
 
-likeRoute.get('/seeLikes', auth, coutLike)
+likeRoute.post('/seeLikes', auth, coutLike)
 
 
 module.exports = likeRoute

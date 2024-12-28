@@ -91,22 +91,43 @@ const userPosts = async(req, res) => {
 const follow = async(req, res) => {
     const { userId, followId } = req.body
 
-    if(userId == followId){
-        return res.json('cant folow ur own shit dumass pumpkin')
-    }
+    const status = await userModel.findById(followId)
+
+    console.log(status)
 
     try{
-        const followed = await userModel.findByIdAndUpdate(followId, {
-            $addToSet: {
-                followers: userId,
-            },
-        }, {new: true})
+        if(status && !status.followers.includes(userId)){
+            const followed = await userModel.findByIdAndUpdate(followId, {
+                $addToSet: {
+                    followers: userId,
+                },
+            }, {new: true})
 
-        const following = await userModel.findByIdAndUpdate(userId, {
-            $addToSet: {
-                following: followId
-            }
-        }, { new: true })
+            const following = await userModel.findByIdAndUpdate(userId, {
+                $addToSet: {
+                    following: followId
+                }
+            }, { new: true })
+
+            res.json({message: 'followed succesfully'})
+        }else{
+            const unfollow = await userModel.findByIdAndUpdate(userId, {
+                $pull: {
+                    following: followId
+                }
+            }, { new: true })
+    
+            const unfollowed = await userModel.findByIdAndUpdate(followId, {
+                $pull: {
+                    followers: userId
+                }
+            }, { new: true })  
+    
+            res.json({message: 'unfollowed succesfully'})
+        }
+
+
+
 
         res.json({message: "followed succesfuly"})
     }catch (err){
