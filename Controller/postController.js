@@ -36,7 +36,7 @@ const posts = async(req, res) => {
             select: "comment",
             populate: {
                 path: "userId",
-                select: "username profileImg"
+                select: "_id username profileImg"
             }
         }).populate({
             path: "likes",
