@@ -40,7 +40,7 @@ const posts = async(req, res) => {
             }
         }).populate({
             path: "likes",
-            select:"username profileImg"
+            select:"_id username profileImg"
         }).populate({
             path: "userId",
             select: "username profileImg"
