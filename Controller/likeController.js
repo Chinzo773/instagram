@@ -17,7 +17,7 @@ const like = async(req, res) => {
                 }
             })
     
-            res.json('unliked ' + status)
+            res.json(response)
         }else{
             const response = await postModel.findByIdAndUpdate(post, {
                 $addToSet: {
